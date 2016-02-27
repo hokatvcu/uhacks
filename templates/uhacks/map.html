@@ -8,6 +8,9 @@
 <script>
   var myCenter = new google.maps.LatLng(39.8282,-98.5795);
 
+  // TESTING
+  var activeInfoWindow;  
+
   {% for hackathon in hackathons %}
       var {{hackathon}} = new google.maps.LatLng({{hackathon.lat}},{{hackathon.lon}});
       var {{hackathon}}Content = "{{ hackathon }}" + " " + "{{hackathon.city}}" + ", " + "{{ hackathon.state }}" + "-" + "{{hackathon.date|date:"d-m-Y"}}";
@@ -26,7 +29,34 @@
 
   {% for hackathon in hackathons %}
       var {{hackathon}}Marker=new google.maps.Marker({ position:{{hackathon}},});
-      {{hackathon}}Marker.setMap(map); 
+      {{hackathon}}Marker.setMap(map);
+
+      var {{hackathon}}infowindow = new google.maps.InfoWindow({
+  content:"{{ hackathon }}"});
+
+  //     google.maps.event.addListener({{hackathon}}Marker, 'click', function() {
+  // {{hackathon}}infowindow.open(map,{{hackathon}}Marker);
+  // });
+
+      google.maps.event.addListener({{hackathon}}Marker, 'mouseover', function() {
+        
+        // Close active window if exists - [one might expect this to be default behaviour no?]        
+        if(activeInfoWindow != null) activeInfoWindow.close();
+
+        // Close info Window on mouseclick if already opened
+        
+      
+        // Open new InfoWindow for mouseover event
+        {{hackathon}}infowindow.open(map, {{hackathon}}Marker);
+        
+        // Store new open InfoWindow in global variable
+        activeInfoWindow = {{hackathon}}infowindow;       
+      });               
+      
+      // on mouseout (moved mouse off marker) make infoWindow disappear
+      google.maps.event.addListener({{hackathon}}Marker, 'mouseout', function() {
+        {{hackathon}}infowindow.close();  
+      });
   {% endfor %}
 }
 
