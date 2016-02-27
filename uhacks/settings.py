@@ -37,7 +37,7 @@ ENV_ROLE = get_env_variable('ENV_ROLE')
 SECRET_KEY = get_env_variable('UHACKS_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 UHACKS_DB_PASS = False
 if ENV_ROLE == 'development':
