@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%} MAP {% endblock title %}
+{% block jstop %} 
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA7TO_foWjd8-G9now8GNGdFifAvAKixvc"></script>
+
+<script>
+  var myCenter = new google.maps.LatLng(39.8282,-98.5795);
+
+  {% for hackathon in hackathons %}
+      var {{hackathon}} = new google.maps.LatLng({{hackathon.lat}},{{hackathon.lon}});
+      var {{hackathon}}Content = "{{ hackathon }}" + " " + "{{hackathon.city}}" + ", " + "{{ hackathon.state }}" + "-" + "{{hackathon.date|date:"d-m-Y"}}";
+
+  {% endfor %}
+
+// ************** INITIALIZE *******
+  function initialize(){
+    var mapProp = {
+      center:myCenter,
+      zoom:4,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+  var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  {% for hackathon in hackathons %}
+      var {{hackathon}}Marker=new google.maps.Marker({ position:{{hackathon}},});
+      {{hackathon}}Marker.setMap(map); 
+  {% endfor %}
+}
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+    {% endblock jstop %}
+    
+
+
+{% block style %}{% endblock style %}
+
+
+{% block body %}<div id="googleMap" style="width:800px;height:450px;"></div>{% endblock body %}
+
+{% block js %}{% endblock js %}
