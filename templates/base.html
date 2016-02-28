@@ -9,20 +9,16 @@
     <script src="{% static "js/jquery.js" %}"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     {% block jstop %}{% endblock jstop %}
-    
-
-
-	{% block css %}{% endblock css %}
+    {% block css %}{% endblock css %}
 	 <!-- CSS -->
-
 <style>
-
 {% block style %}{% endblock style %}
 </style>
 
 </head>
 
 <body>
+  <a id="mlh-trust-badge" style="position:fixed;top:0;right:50px;max-width:100px;width:10%;min-width: 60px;display:block;z-index:10000" href="https://mlh.io/seasons/s2016/events?utm_source=s2016&utm_medium=TrustBadge&utm_campaign=s2016" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/s2016.png" alt="MLH Official - Spring 2016" style="width:100%;" ></a>
 
 
     <!-- Fixed navbar -->
@@ -35,30 +31,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">HackU</a>
+          <a class="navbar-brand" href="#">Hack<span style="color:red; font-weight:bold">U</span></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-
        {% block body %}{% endblock body %}
 
-
-    <!-- /.container -->
-
-    <!-- Begin page content -->
- 
-
-
-
-
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted" style="font-size: 10px">Copyright © 2016 Kenny Ho All rights reserved</p>
+      </div>
+    </footer>
 
   </body>
         

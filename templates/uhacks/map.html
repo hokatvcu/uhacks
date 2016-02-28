@@ -1,20 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title%} MAP {% endblock title %}
 {% block jstop %} 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7TO_foWjd8-G9now8GNGdFifAvAKixvc"></script>
 
 <script>
   var myCenter = new google.maps.LatLng(39.8282,-98.5795);
-
-  // TESTING
   var activeInfoWindow;  
 
   {% for hackathon in hackathons %}
       var {{hackathon}} = new google.maps.LatLng({{hackathon.lat}},{{hackathon.lon}});
       var {{hackathon}}Content = "{{ hackathon }}" + " " + "{{hackathon.city}}" + ", " + "{{ hackathon.state }}" + "-" + "{{hackathon.date|date:"d-m-Y"}}";
-
   {% endfor %}
 
 // ************** INITIALIZE *******
@@ -28,24 +24,19 @@
   var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
   {% for hackathon in hackathons %}
+
       var {{hackathon}}Marker=new google.maps.Marker({ position:{{hackathon}},});
       {{hackathon}}Marker.setMap(map);
 
       var {{hackathon}}infowindow = new google.maps.InfoWindow({
-  content:"{{ hackathon }}"});
+          content:"{{ hackathon }}" + "<br />" + "{{hackathon.city}}" + ", " + "{{ hackathon.state }}" + "<br />" + "{{hackathon.date|date:"m-d-Y"}}"});
 
-  //     google.maps.event.addListener({{hackathon}}Marker, 'click', function() {
-  // {{hackathon}}infowindow.open(map,{{hackathon}}Marker);
-  // });
 
       google.maps.event.addListener({{hackathon}}Marker, 'mouseover', function() {
         
         // Close active window if exists - [one might expect this to be default behaviour no?]        
         if(activeInfoWindow != null) activeInfoWindow.close();
-
-        // Close info Window on mouseclick if already opened
         
-      
         // Open new InfoWindow for mouseover event
         {{hackathon}}infowindow.open(map, {{hackathon}}Marker);
         
@@ -57,6 +48,7 @@
       google.maps.event.addListener({{hackathon}}Marker, 'mouseout', function() {
         {{hackathon}}infowindow.close();  
       });
+   
   {% endfor %}
 }
 
@@ -65,10 +57,35 @@
     {% endblock jstop %}
     
 
+{% block body %}
+<div id="googleMap"></div>
 
-{% block style %}{% endblock style %}
+<!-- TEST -->
+<div class="container">
+  <img id="mlhlogo" src="{% static "images/mlhlogo.png" %}" alt="mlhlogo"/>
+  <h2>Spring 2016 </h2>          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Hackathon</th>
+        <th>School</th>
+        <th>Location</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hackathon in hackathons %}
+      <tr>
+        <td>{{ hackathon }}</td>
+        <td>{{ hackathon.school }}</td>
+        <td>{{ hackathon.city }}, {{ hackathon.state }}</td>
+        <td>{{ hackathon.date|date:"m-d-Y" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-
-{% block body %}WTF<div id="googleMap" style="width:800px;height:450px;"></div>{% endblock body %}
+{% endblock body %}
 
 {% block js %}{% endblock js %}
