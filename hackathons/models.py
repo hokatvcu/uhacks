@@ -13,6 +13,7 @@ class Hackathon(models.Model):
 	slug = models.SlugField(blank=True)
 	lat = models.CharField(max_length=255, blank=True)
 	lon =  models.CharField(max_length=255,blank=True)
+	url = models.URLField(max_length=500)
 
 	class Meta:
 		ordering = ['date']

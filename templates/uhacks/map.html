@@ -76,8 +76,14 @@
     <tbody>
       {% for hackathon in hackathons %}
       <tr>
-        <td>{{ hackathon }}</td>
-        <td>{{ hackathon.school }}</td>
+        <td>
+          <a href="{{hackathon.url}}">
+          <div style="height:100%;width:100%">
+            {{ hackathon }}
+          </div>
+        </a>
+      </td>
+        <td >{{ hackathon.school }}</td>
         <td>{{ hackathon.city }}, {{ hackathon.state }}</td>
         <td>{{ hackathon.date|date:"m-d-Y" }}</td>
       </tr>
